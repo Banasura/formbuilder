@@ -159,8 +159,6 @@ class BuilderView extends Backbone.View
 
   bindSaveEvent: ->
     @formSaved = true
-    @saveFormButton = @$el.find(".js-save-form")
-    @saveFormButton.attr('disabled', true).text(Formbuilder.options.dict.ALL_CHANGES_SAVED)
 
     unless !Formbuilder.options.AUTOSAVE
       setInterval =>
@@ -325,12 +323,10 @@ class BuilderView extends Backbone.View
   handleFormUpdate: ->
     return if @updatingBatch
     @formSaved = false
-    @saveFormButton.removeAttr('disabled').text(Formbuilder.options.dict.SAVE_FORM)
 
   saveForm: (e) ->
     return if @formSaved
     @formSaved = true
-    @saveFormButton.attr('disabled', true).text(Formbuilder.options.dict.ALL_CHANGES_SAVED)
     @collection.sort()
     payload = JSON.stringify fields: @collection.toJSON()
 
