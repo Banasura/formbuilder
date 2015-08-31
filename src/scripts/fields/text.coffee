@@ -12,7 +12,7 @@ Formbuilder.registerField 'text',
   """
 
   addButton: """
-    <span class='symbol'><span class='fa fa-font'></span></span> Text
+    <%= Formbuilder.options.dict.TEXT %>
   """
 
   defaultAttributes: (attrs) ->

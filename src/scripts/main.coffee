@@ -132,7 +132,6 @@ class BuilderView extends Backbone.View
   SUBVIEWS: []
 
   events:
-    'click .js-save-form': 'saveForm'
     'click .fb-tabs a': 'showTab'
     'click .fb-add-field-types a': 'addField'
     'mouseover .fb-add-field-types': 'lockLeftWrapper'
@@ -354,7 +353,7 @@ class Formbuilder
   @helpers:
     defaultFieldAttrs: (field_type) ->
       attrs = {}
-      attrs[Formbuilder.options.mappings.LABEL] = 'Untitled'
+      attrs[Formbuilder.options.mappings.LABEL] = "Untitled"
       attrs[Formbuilder.options.mappings.FIELD_TYPE] = field_type
       attrs[Formbuilder.options.mappings.REQUIRED] = true
       attrs['field_options'] = {}
@@ -392,13 +391,55 @@ class Formbuilder
       ALL_CHANGES_SAVED: 'All changes saved'
       SAVE_FORM: 'Save form'
       UNSAVED_CHANGES: 'You have unsaved changes. If you leave this page, you will lose those changes!'
-
+      NO_RESPONSE_FIELDS: 'No response fields'
+      ADD_NEW_FIELD: 'Add a new field'
+      EDIT_FIELD: 'Edit field'
+      DROPDOWN: 'Dropdown'
+      EMAIL: 'Email'
+      NUMBER: 'Number'
+      PARAGRAPH: 'Paragraph'
+      PRICE: 'Price'
+      MULTIPLE_CHOICE: 'Multiple choice'
+      SECTION_BREAK: 'Section break'
+      TEXT: 'Text'
+      TIME: 'Time'
+      WEBSITE: 'Website'
+      CHECKBOXES: 'Checkboxes'
+      DATE: 'Date'
+      ADDRESS: 'Address'
+      ADD_A_LONGER_DESCRIPTION_TO_THIS_FIELD: 'Add a longer description to this field'
+      LABEL: 'Label'
+      INTEGER_ONLY: 'Integer only'
+      ONLY_ACCEPT_INTEGERS: 'Only accept integers'
+      REQUIRED: 'Required'
+      MINIMUM_MAXIMUM: 'Minimum / Maximum'
+      ABOVE: 'Above'
+      BELOW: 'Below'
+      LENGTH_LIMIT: 'Length limit'
+      MIN: 'Min'
+      MAX: 'Max'
+      CHARACTERS: 'characters'
+      WORDS: 'words'
+      OPTIONS: 'Options'
+      INCLUDE_BLANK: 'Include blank'
+      INCLUDE_OTHER: 'Include "other"'
+      ADD_OPTION: 'Add option'
+      SIZE: 'Size'
+      SMALL: 'Small'
+      MEDIUM: 'Medium'
+      LARGE: 'Large'
+      UNITS: 'Units'
+      DUPLICATE_FIELD: 'Duplicate field'
+      REMOVE_FIELD: 'Remove field'
+      REMOVE_OPTION: 'Remove option'
+      UNTITLED: 'Untitled'
+	
   @fields: {}
   @inputFields: {}
   @nonInputFields: {}
 
   @registerField: (name, opts) ->
-    for x in ['view', 'edit']
+    for x in ['view', 'edit', 'addButton']
       opts[x] = _.template(opts[x])
 
     opts.field_type = name

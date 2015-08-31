@@ -12,7 +12,7 @@ Formbuilder.registerField 'paragraph',
   """
 
   addButton: """
-    <span class="symbol">&#182;</span> Paragraph
+    <%= Formbuilder.options.dict.PARAGRAPH %>
   """
 
   defaultAttributes: (attrs) ->

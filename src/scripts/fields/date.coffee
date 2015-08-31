@@ -28,5 +28,5 @@ Formbuilder.registerField 'date',
   edit: ""
 
   addButton: """
-    <span class="symbol"><span class="fa fa-calendar"></span></span> Date
+    <%= Formbuilder.options.dict.DATE %>
   """

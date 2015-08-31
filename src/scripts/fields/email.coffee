@@ -9,5 +9,5 @@ Formbuilder.registerField 'email',
   edit: ""
 
   addButton: """
-    <span class="symbol"><span class="fa fa-envelope-o"></span></span> Email
+    <%= Formbuilder.options.dict.EMAIL %>
   """

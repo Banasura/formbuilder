@@ -13,9 +13,9 @@ Formbuilder.registerField 'section_break',
     <div class='fb-edit-section-header'>Label</div>
     <input type='text' data-rv-input='model.<%= Formbuilder.options.mappings.LABEL %>' />
     <textarea data-rv-input='model.<%= Formbuilder.options.mappings.DESCRIPTION %>'
-      placeholder='Add a longer description to this field'></textarea>
+      placeholder='#{Formbuilder.options.dict.ADD_A_LONGER_DESCRIPTION_TO_THIS_FIELD}'></textarea>
   """
 
   addButton: """
-    <span class='symbol'><span class='fa fa-minus'></span></span> Section Break
+    <%= Formbuilder.options.dict.SECTION_BREAK %>
   """

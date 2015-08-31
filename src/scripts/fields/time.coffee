@@ -35,5 +35,5 @@ Formbuilder.registerField 'time',
   edit: ""
 
   addButton: """
-    <span class="symbol"><span class="fa fa-clock-o"></span></span> Time
+    <%= Formbuilder.options.dict.TIME %>
   """

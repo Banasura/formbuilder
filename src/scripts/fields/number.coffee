@@ -16,5 +16,5 @@ Formbuilder.registerField 'number',
   """
 
   addButton: """
-    <span class="symbol"><span class="fa fa-number">123</span></span> Number
+    <%= Formbuilder.options.dict.NUMBER %>
   """

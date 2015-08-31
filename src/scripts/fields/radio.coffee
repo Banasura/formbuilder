@@ -29,7 +29,7 @@ Formbuilder.registerField 'radio',
   """
 
   addButton: """
-    <span class="symbol"><span class="fa fa-circle-o"></span></span> Multiple Choice
+    <%= Formbuilder.options.dict.MULTIPLE_CHOICE %>
   """
 
   defaultAttributes: (attrs) ->
