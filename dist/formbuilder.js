@@ -621,10 +621,6 @@
         INCLUDE_BLANK: 'Include blank',
         INCLUDE_OTHER: 'Include "other"',
         ADD_OPTION: 'Add option',
-        SIZE: 'Size',
-        SMALL: 'Small',
-        MEDIUM: 'Medium',
-        LARGE: 'Large',
         UNITS: 'Units',
         DUPLICATE_FIELD: 'Duplicate field',
         REMOVE_FIELD: 'Remove field',
@@ -760,7 +756,7 @@
   Formbuilder.registerField('paragraph', {
     order: 5,
     view: "<textarea class='rf-size-<%= rf.get(Formbuilder.options.mappings.SIZE) %>'></textarea>",
-    edit: "<%= Formbuilder.templates['edit/size']() %>\n<%= Formbuilder.templates['edit/min_max_length']() %>",
+    edit: "<%= Formbuilder.templates['edit/min_max_length']() %>",
     addButton: "<%= Formbuilder.options.dict.PARAGRAPH %>",
     defaultAttributes: function(attrs) {
       attrs.field_options.size = 'small';
@@ -807,7 +803,7 @@
   Formbuilder.registerField('text', {
     order: 0,
     view: "<input type='text' class='rf-size-<%= rf.get(Formbuilder.options.mappings.SIZE) %>' />",
-    edit: "<%= Formbuilder.templates['edit/size']() %>\n<%= Formbuilder.templates['edit/min_max_length']() %>",
+    edit: "<%= Formbuilder.templates['edit/min_max_length']() %>",
     addButton: "<%= Formbuilder.options.dict.TEXT %>",
     defaultAttributes: function(attrs) {
       attrs.field_options.size = 'small';
@@ -1032,26 +1028,6 @@ __p += '\n\n<div class=\'fb-bottom-add\'>\n  <a class="js-add-option ' +
 '">' +
 ((__t = ( Formbuilder.options.dict.ADD_OPTION )) == null ? '' : __t) +
 '</a>\n</div>\n';
-
-}
-return __p
-};
-
-this["Formbuilder"]["templates"]["edit/size"] = function(obj) {
-obj || (obj = {});
-var __t, __p = '', __e = _.escape;
-with (obj) {
-__p += '<div class=\'fb-edit-section-header\'>' +
-((__t = ( Formbuilder.options.dict.SIZE )) == null ? '' : __t) +
-'</div>\n<select data-rv-value="model.' +
-((__t = ( Formbuilder.options.mappings.SIZE )) == null ? '' : __t) +
-'">\n  <option value="small">' +
-((__t = ( Formbuilder.options.dict.SMALL )) == null ? '' : __t) +
-'</option>\n  <option value="medium">' +
-((__t = ( Formbuilder.options.dict.MEDIUM )) == null ? '' : __t) +
-'</option>\n  <option value="large">' +
-((__t = ( Formbuilder.options.dict.LARGE )) == null ? '' : __t) +
-'</option>\n</select>\n';
 
 }
 return __p

@@ -7,7 +7,6 @@ Formbuilder.registerField 'paragraph',
   """
 
   edit: """
-    <%= Formbuilder.templates['edit/size']() %>
     <%= Formbuilder.templates['edit/min_max_length']() %>
   """
 
