@@ -49,7 +49,18 @@ module.exports = (grunt) ->
             '<%= srcFolder %>/scripts/underscore_mixins.coffee'
             '<%= srcFolder %>/scripts/rivets-config.coffee'
             '<%= srcFolder %>/scripts/main.coffee'
-            '<%= srcFolder %>/scripts/fields/*.coffee'
+            # compile just fields which are implemented server-side yet
+            '<%= srcFolder %>/scripts/fields/checkboxes.coffee'
+            '<%= srcFolder %>/scripts/fields/date.coffee'
+            '<%= srcFolder %>/scripts/fields/dropdown.coffee'
+            '<%= srcFolder %>/scripts/fields/email.coffee'
+            '<%= srcFolder %>/scripts/fields/number.coffee'
+            '<%= srcFolder %>/scripts/fields/paragraph.coffee'
+            '<%= srcFolder %>/scripts/fields/radio.coffee'
+            '<%= srcFolder %>/scripts/fields/section_break.coffee'
+            '<%= srcFolder %>/scripts/fields/text.coffee'
+            '<%= srcFolder %>/scripts/fields/time.coffee'
+            '<%= srcFolder %>/scripts/fields/website.coffee'
           ]
 
     concat:
