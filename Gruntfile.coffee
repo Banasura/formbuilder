@@ -61,6 +61,8 @@ module.exports = (grunt) ->
             '<%= srcFolder %>/scripts/fields/text.coffee'
             '<%= srcFolder %>/scripts/fields/time.coffee'
             '<%= srcFolder %>/scripts/fields/website.coffee'
+            '<%= srcFolder %>/scripts/fields/submit.coffee'
+            '<%= srcFolder %>/scripts/fields/reset.coffee'
           ]
 
     concat:

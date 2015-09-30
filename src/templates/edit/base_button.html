@@ -1,0 +1,11 @@
+<%= Formbuilder.templates['edit/base_header']() %>
+<div class='fb-edit-section-header'><%= Formbuilder.options.dict.LABEL %></div>
+
+<div class='fb-common-wrapper'>
+    <div class='fb-label-description'>
+        <input type='text' data-rv-input='model.<%= Formbuilder.options.mappings.LABEL %>' />
+    </div>
+    <div class='fb-clear'></div>
+</div>
+
+<%= Formbuilder.fields[rf.get(Formbuilder.options.mappings.FIELD_TYPE)].edit({rf: rf}) %>

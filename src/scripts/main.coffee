@@ -5,6 +5,8 @@ class FormbuilderModel extends Backbone.DeepModel
     $(".fb-field-wrapper").index $wrapper
   is_input: ->
     Formbuilder.inputFields[@get(Formbuilder.options.mappings.FIELD_TYPE)]?
+  is_button: ->
+    Formbuilder.buttonFields[@get(Formbuilder.options.mappings.FIELD_TYPE)]?
 
 
 class FormbuilderCollection extends Backbone.Collection
@@ -36,7 +38,15 @@ class ViewFieldView extends Backbone.View
   render: ->
     @$el.addClass('response-field-' + @model.get(Formbuilder.options.mappings.FIELD_TYPE))
         .data('cid', @model.cid)
-        .html(Formbuilder.templates["view/base#{if !@model.is_input() then '_non_input' else ''}"]({rf: @model}))
+        .html(Formbuilder.templates["view/base#{
+      if !@model.is_input()
+        if @model.is_button()
+          '_button'
+        else
+          '_non_input'
+      else
+        ''
+      }"]({rf: @model}))
 
     return @
 
@@ -82,7 +92,15 @@ class EditFieldView extends Backbone.View
     @listenTo @model, "destroy", @remove
 
   render: ->
-    @$el.html(Formbuilder.templates["edit/base#{if !@model.is_input() then '_non_input' else ''}"]({rf: @model}))
+    @$el.html(Formbuilder.templates["edit/base#{
+    if !@model.is_input()
+      if @model.is_button()
+        '_button'
+      else
+        '_non_input'
+    else
+      ''
+    }"]({rf: @model}))
     rivets.bind @$el, { model: @model }
     return @
 
@@ -429,10 +447,13 @@ class Formbuilder
       REMOVE_FIELD: 'Remove field'
       REMOVE_OPTION: 'Remove option'
       UNTITLED: 'Untitled'
-	
+      SUBMIT: 'Submit'
+      RESET: 'Reset'
+
   @fields: {}
   @inputFields: {}
   @nonInputFields: {}
+  @buttonFields: {}
 
   @registerField: (name, opts) ->
     for x in ['view', 'edit', 'addButton']
@@ -442,10 +463,13 @@ class Formbuilder
 
     Formbuilder.fields[name] = opts
 
-    if opts.type == 'non_input'
-      Formbuilder.nonInputFields[name] = opts
-    else
-      Formbuilder.inputFields[name] = opts
+    switch opts.type
+      when 'non_input'
+        Formbuilder.nonInputFields[name] = opts
+      when 'button'
+        Formbuilder.buttonFields[name] = opts
+      else
+        Formbuilder.inputFields[name] = opts
 
   constructor: (opts={}) ->
     _.extend @, Backbone.Events

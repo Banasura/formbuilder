@@ -68,6 +68,10 @@
       return Formbuilder.inputFields[this.get(Formbuilder.options.mappings.FIELD_TYPE)] != null;
     };
 
+    FormbuilderModel.prototype.is_button = function() {
+      return Formbuilder.buttonFields[this.get(Formbuilder.options.mappings.FIELD_TYPE)] != null;
+    };
+
     return FormbuilderModel;
 
   })(Backbone.DeepModel);
@@ -121,7 +125,7 @@
     };
 
     ViewFieldView.prototype.render = function() {
-      this.$el.addClass('response-field-' + this.model.get(Formbuilder.options.mappings.FIELD_TYPE)).data('cid', this.model.cid).html(Formbuilder.templates["view/base" + (!this.model.is_input() ? '_non_input' : '')]({
+      this.$el.addClass('response-field-' + this.model.get(Formbuilder.options.mappings.FIELD_TYPE)).data('cid', this.model.cid).html(Formbuilder.templates["view/base" + (!this.model.is_input() ? this.model.is_button() ? '_button' : '_non_input' : '')]({
         rf: this.model
       }));
       return this;
@@ -191,7 +195,7 @@
     };
 
     EditFieldView.prototype.render = function() {
-      this.$el.html(Formbuilder.templates["edit/base" + (!this.model.is_input() ? '_non_input' : '')]({
+      this.$el.html(Formbuilder.templates["edit/base" + (!this.model.is_input() ? this.model.is_button() ? '_button' : '_non_input' : '')]({
         rf: this.model
       }));
       rivets.bind(this.$el, {
@@ -625,7 +629,9 @@
         DUPLICATE_FIELD: 'Duplicate field',
         REMOVE_FIELD: 'Remove field',
         REMOVE_OPTION: 'Remove option',
-        UNTITLED: 'Untitled'
+        UNTITLED: 'Untitled',
+        SUBMIT: 'Submit',
+        RESET: 'Reset'
       }
     };
 
@@ -634,6 +640,8 @@
     Formbuilder.inputFields = {};
 
     Formbuilder.nonInputFields = {};
+
+    Formbuilder.buttonFields = {};
 
     Formbuilder.registerField = function(name, opts) {
       var x, _i, _len, _ref5;
@@ -644,10 +652,13 @@
       }
       opts.field_type = name;
       Formbuilder.fields[name] = opts;
-      if (opts.type === 'non_input') {
-        return Formbuilder.nonInputFields[name] = opts;
-      } else {
-        return Formbuilder.inputFields[name] = opts;
+      switch (opts.type) {
+        case 'non_input':
+          return Formbuilder.nonInputFields[name] = opts;
+        case 'button':
+          return Formbuilder.buttonFields[name] = opts;
+        default:
+          return Formbuilder.inputFields[name] = opts;
       }
     };
 
@@ -759,7 +770,6 @@
     edit: "<%= Formbuilder.templates['edit/min_max_length']() %>",
     addButton: "<%= Formbuilder.options.dict.PARAGRAPH %>",
     defaultAttributes: function(attrs) {
-      attrs.field_options.size = 'small';
       return attrs;
     }
   });
@@ -806,7 +816,6 @@
     edit: "<%= Formbuilder.templates['edit/min_max_length']() %>",
     addButton: "<%= Formbuilder.options.dict.TEXT %>",
     defaultAttributes: function(attrs) {
-      attrs.field_options.size = 'small';
       return attrs;
     }
   });
@@ -833,6 +842,28 @@
 
 }).call(this);
 
+(function() {
+  Formbuilder.registerField('submit', {
+    order: 0,
+    type: "button",
+    view: "<input type=\"submit\" value=\"<% if (label = rf.get(Formbuilder.options.mappings.LABEL)) { %><%= label %><% } %>\">",
+    edit: "",
+    addButton: "<%= Formbuilder.options.dict.SUBMIT %>"
+  });
+
+}).call(this);
+
+(function() {
+  Formbuilder.registerField('reset', {
+    order: 0,
+    type: "button",
+    view: "<input type=\"reset\" value=\"<% if (label = rf.get(Formbuilder.options.mappings.LABEL)) { %><%= label %><% } %>\">",
+    edit: "",
+    addButton: "<%= Formbuilder.options.dict.RESET %>"
+  });
+
+}).call(this);
+
 this["Formbuilder"] = this["Formbuilder"] || {};
 this["Formbuilder"]["templates"] = this["Formbuilder"]["templates"] || {};
 
@@ -845,6 +876,24 @@ __p +=
 '\n' +
 ((__t = ( Formbuilder.templates['edit/common']() )) == null ? '' : __t) +
 '\n' +
+((__t = ( Formbuilder.fields[rf.get(Formbuilder.options.mappings.FIELD_TYPE)].edit({rf: rf}) )) == null ? '' : __t) +
+'\n';
+
+}
+return __p
+};
+
+this["Formbuilder"]["templates"]["edit/base_button"] = function(obj) {
+obj || (obj = {});
+var __t, __p = '', __e = _.escape;
+with (obj) {
+__p +=
+((__t = ( Formbuilder.templates['edit/base_header']() )) == null ? '' : __t) +
+'\n<div class=\'fb-edit-section-header\'>' +
+((__t = ( Formbuilder.options.dict.LABEL )) == null ? '' : __t) +
+'</div>\n\n<div class=\'fb-common-wrapper\'>\n    <div class=\'fb-label-description\'>\n        <input type=\'text\' data-rv-input=\'model.' +
+((__t = ( Formbuilder.options.mappings.LABEL )) == null ? '' : __t) +
+'\' />\n    </div>\n    <div class=\'fb-clear\'></div>\n</div>\n\n' +
 ((__t = ( Formbuilder.fields[rf.get(Formbuilder.options.mappings.FIELD_TYPE)].edit({rf: rf}) )) == null ? '' : __t) +
 '\n';
 
@@ -982,9 +1031,9 @@ __p += '<div class=\'fb-edit-section-header\'>' +
 ((__t = ( Formbuilder.options.mappings.LENGTH_UNITS )) == null ? '' : __t) +
 '" style="width: auto;">\n  <option value="characters">' +
 ((__t = ( Formbuilder.options.dict.CHARACTERS )) == null ? '' : __t) +
-'</option>\n  <option value="words">' +
+'</option>\n  <!--<option value="words">' +
 ((__t = ( Formbuilder.options.dict.WORDS )) == null ? '' : __t) +
-'</option>\n</select>\n';
+'</option>-->\n</select>\n';
 
 }
 return __p
@@ -1077,6 +1126,16 @@ __p += '\n        <a data-field-type="' +
 '\n        </a>\n      ';
  }); ;
 __p += '\n    </div>\n\n    <div class=\'section\'>\n      ';
+ _.each(_.sortBy(Formbuilder.buttonFields, 'order'), function(f){ ;
+__p += '\n      <a data-field-type="' +
+((__t = ( f.field_type )) == null ? '' : __t) +
+'" class="' +
+((__t = ( Formbuilder.options.BUTTON_CLASS )) == null ? '' : __t) +
+'">\n        ' +
+((__t = ( f.addButton() )) == null ? '' : __t) +
+'\n      </a>\n      ';
+ }); ;
+__p += '\n    </div>\n\n    <div class=\'section\'>\n      ';
  _.each(_.sortBy(Formbuilder.nonInputFields, 'order'), function(f){ ;
 __p += '\n        <a data-field-type="' +
 ((__t = ( f.field_type )) == null ? '' : __t) +
@@ -1143,6 +1202,20 @@ __p += '<div class=\'subtemplate-wrapper\'>\n  <div class=\'cover\'></div>\n  ' 
 '\n\n  ' +
 ((__t = ( Formbuilder.templates['view/description']({rf: rf}) )) == null ? '' : __t) +
 '\n  ' +
+((__t = ( Formbuilder.templates['view/duplicate_remove']({rf: rf}) )) == null ? '' : __t) +
+'\n</div>\n';
+
+}
+return __p
+};
+
+this["Formbuilder"]["templates"]["view/base_button"] = function(obj) {
+obj || (obj = {});
+var __t, __p = '', __e = _.escape;
+with (obj) {
+__p += '<div class=\'subtemplate-wrapper\'>\n    <div class=\'cover\'></div>\n    ' +
+((__t = ( Formbuilder.fields[rf.get(Formbuilder.options.mappings.FIELD_TYPE)].view({rf: rf}) )) == null ? '' : __t) +
+'\n    ' +
 ((__t = ( Formbuilder.templates['view/duplicate_remove']({rf: rf}) )) == null ? '' : __t) +
 '\n</div>\n';
 
