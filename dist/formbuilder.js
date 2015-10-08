@@ -799,17 +799,6 @@
 }).call(this);
 
 (function() {
-  Formbuilder.registerField('section_break', {
-    order: 0,
-    type: 'non_input',
-    view: "<label class='section-name'><%= rf.get(Formbuilder.options.mappings.LABEL) %></label>\n<p><%= rf.get(Formbuilder.options.mappings.DESCRIPTION) %></p>",
-    edit: "<div class='fb-edit-section-header'>Label</div>\n<input type='text' data-rv-input='model.<%= Formbuilder.options.mappings.LABEL %>' />\n<textarea data-rv-input='model.<%= Formbuilder.options.mappings.DESCRIPTION %>'\n  placeholder='" + Formbuilder.options.dict.ADD_A_LONGER_DESCRIPTION_TO_THIS_FIELD + "'></textarea>",
-    addButton: "<%= Formbuilder.options.dict.SECTION_BREAK %>"
-  });
-
-}).call(this);
-
-(function() {
   Formbuilder.registerField('text', {
     order: 0,
     view: "<input type='text' class='rf-size-<%= rf.get(Formbuilder.options.mappings.SIZE) %>' />",

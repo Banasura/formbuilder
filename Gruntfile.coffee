@@ -57,7 +57,6 @@ module.exports = (grunt) ->
             '<%= srcFolder %>/scripts/fields/number.coffee'
             '<%= srcFolder %>/scripts/fields/paragraph.coffee'
             '<%= srcFolder %>/scripts/fields/radio.coffee'
-            '<%= srcFolder %>/scripts/fields/section_break.coffee'
             '<%= srcFolder %>/scripts/fields/text.coffee'
             '<%= srcFolder %>/scripts/fields/time.coffee'
             '<%= srcFolder %>/scripts/fields/website.coffee'
