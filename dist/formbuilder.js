@@ -125,7 +125,9 @@
     };
 
     ViewFieldView.prototype.render = function() {
-      this.$el.addClass('response-field-' + this.model.get(Formbuilder.options.mappings.FIELD_TYPE)).data('cid', this.model.cid).html(Formbuilder.templates["view/base" + (!this.model.is_input() ? this.model.is_button() ? '_button' : '_non_input' : '')]({
+      var fieldType;
+      fieldType = this.model.get(Formbuilder.options.mappings.FIELD_TYPE);
+      this.$el.addClass('response-field-' + fieldType).data('cid', this.model.cid).html(Formbuilder.templates["view/base" + (!this.model.is_input() ? this.model.is_button() ? '_button' : '_non_input' : '')]({
         rf: this.model
       }));
       return this;
@@ -631,7 +633,8 @@
         REMOVE_OPTION: 'Remove option',
         UNTITLED: 'Untitled',
         SUBMIT: 'Submit',
-        RESET: 'Reset'
+        RESET: 'Reset',
+        CAPTCHA: 'Captcha'
       }
     };
 
@@ -853,6 +856,20 @@
 
 }).call(this);
 
+(function() {
+  Formbuilder.registerField('captcha', {
+    order: 99,
+    noCheckboxes: true,
+    view: "",
+    edit: "",
+    addButton: "<%= Formbuilder.options.dict.CAPTCHA %>",
+    defaultAttributes: function(attrs) {
+      return attrs;
+    }
+  });
+
+}).call(this);
+
 this["Formbuilder"] = this["Formbuilder"] || {};
 this["Formbuilder"]["templates"] = this["Formbuilder"]["templates"] || {};
 
@@ -863,7 +880,7 @@ with (obj) {
 __p +=
 ((__t = ( Formbuilder.templates['edit/base_header']() )) == null ? '' : __t) +
 '\n' +
-((__t = ( Formbuilder.templates['edit/common']() )) == null ? '' : __t) +
+((__t = ( Formbuilder.templates['edit/common']({rf:rf}) )) == null ? '' : __t) +
 '\n' +
 ((__t = ( Formbuilder.fields[rf.get(Formbuilder.options.mappings.FIELD_TYPE)].edit({rf: rf}) )) == null ? '' : __t) +
 '\n';
@@ -936,15 +953,20 @@ return __p
 
 this["Formbuilder"]["templates"]["edit/common"] = function(obj) {
 obj || (obj = {});
-var __t, __p = '', __e = _.escape;
+var __t, __p = '', __e = _.escape, __j = Array.prototype.join;
+function print() { __p += __j.call(arguments, '') }
 with (obj) {
 __p += '<div class=\'fb-edit-section-header\'>' +
 ((__t = ( Formbuilder.options.dict.LABEL )) == null ? '' : __t) +
 '</div>\n\n<div class=\'fb-common-wrapper\'>\n  <div class=\'fb-label-description\'>\n    ' +
 ((__t = ( Formbuilder.templates['edit/label_description']() )) == null ? '' : __t) +
-'\n  </div>\n  <div class=\'fb-common-checkboxes\'>\n    ' +
+'\n  </div>\n\n  ';
+ if (!Formbuilder.fields[rf.get(Formbuilder.options.mappings.FIELD_TYPE)].noCheckboxes) { ;
+__p += '\n  <div class=\'fb-common-checkboxes\'>\n    ' +
 ((__t = ( Formbuilder.templates['edit/checkboxes']() )) == null ? '' : __t) +
-'\n  </div>\n  <div class=\'fb-clear\'></div>\n</div>\n';
+'\n  </div>\n  ';
+ } ;
+__p += '\n  <div class=\'fb-clear\'></div>\n</div>\n';
 
 }
 return __p

@@ -36,7 +36,8 @@ class ViewFieldView extends Backbone.View
     @listenTo @model, "destroy", @remove
 
   render: ->
-    @$el.addClass('response-field-' + @model.get(Formbuilder.options.mappings.FIELD_TYPE))
+    fieldType = @model.get(Formbuilder.options.mappings.FIELD_TYPE)
+    @$el.addClass('response-field-' + fieldType)
         .data('cid', @model.cid)
         .html(Formbuilder.templates["view/base#{
       if !@model.is_input()
@@ -449,6 +450,7 @@ class Formbuilder
       UNTITLED: 'Untitled'
       SUBMIT: 'Submit'
       RESET: 'Reset'
+      CAPTCHA: 'Captcha'
 
   @fields: {}
   @inputFields: {}

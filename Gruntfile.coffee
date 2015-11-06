@@ -62,6 +62,7 @@ module.exports = (grunt) ->
             '<%= srcFolder %>/scripts/fields/website.coffee'
             '<%= srcFolder %>/scripts/fields/submit.coffee'
             '<%= srcFolder %>/scripts/fields/reset.coffee'
+            '<%= srcFolder %>/scripts/fields/captcha.coffee'
           ]
 
     concat:

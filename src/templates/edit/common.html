@@ -4,8 +4,11 @@
   <div class='fb-label-description'>
     <%= Formbuilder.templates['edit/label_description']() %>
   </div>
+
+  <% if (!Formbuilder.fields[rf.get(Formbuilder.options.mappings.FIELD_TYPE)].noCheckboxes) { %>
   <div class='fb-common-checkboxes'>
     <%= Formbuilder.templates['edit/checkboxes']() %>
   </div>
+  <% } %>
   <div class='fb-clear'></div>
 </div>
